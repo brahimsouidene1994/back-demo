@@ -112,3 +112,17 @@
         -> npx sequelize-cli db:seed:all
     - undo seed:
         -> npx sequelize-cli db:seed:undo
+
+11- git
+    - install git:
+        https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+    - create github account:
+    - ssh key generate:
+        -> ssh-keygen
+    - work with project:
+        -> git init
+        -> git add .
+        -> git remote add origin git@github.com:brahimsouidene1994/back-demo.git
+        -> git push origin master
+        -> git branch
+        -> git checkout -b DemoBranch
