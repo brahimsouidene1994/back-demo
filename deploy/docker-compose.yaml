@@ -1,0 +1,21 @@
+services: # Defines the services (containers) that will run
+  postgres: # This is the name of the service.
+    image: postgres:latest # Specifies the Docker image to use
+    container_name: postgres-container # Specifies the name of the container
+    environment: 
+      POSTGRES_USER: mydb_user 
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/postgres-data:/var/lib/postgresql/data
+    networks:
+      - postgres-network
+
+volumes: # Defines the volumes that will be created
+  postgres-data:
+
+networks: # Defines the networks that will be created
+  postgres-network: 
+    driver: bridge # Specifies the network driver as bridge. This is the default for Docker Compose and allows containers to communicate within the same network.
