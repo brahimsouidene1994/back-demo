@@ -126,3 +126,5 @@
         -> git push origin master
         -> git branch
         -> git checkout -b DemoBranch
+12- jwt:
+    - jsonwebtoken, bcryptjs 
