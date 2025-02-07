@@ -128,3 +128,34 @@
         -> git checkout -b DemoBranch
 12- jwt:
     - jsonwebtoken, bcryptjs 
+
+13- from js to ts:
+    - node js to ts:
+        https://nodejs.org/en/learn/typescript/introduction
+
+    - install TypeScript
+        -> npm install --save-dev typescript 
+    - run TypeScript files directly
+        -> npm install --save-dev ts-node 
+    - Node.js type definitions to enable TypeScript to understand Node.js APIs
+        -> npm install --save-dev @types/node
+    
+    - Initialize a TypeScript Configuration File:
+        -> npx tsc --init
+    - set configuration:
+        {
+            "compilerOptions": {
+                "target": "ES2020", // Set the ECMAScript version
+                "module": "commonjs", // Use CommonJS modules
+                "outDir": "./dist", // Output directory for compiled JS files
+                "rootDir": ".", // Source directory for TS files
+                "strict": true, // Enable all strict type-checking options
+                "esModuleInterop": true, // Enable ES module interop
+                "skipLibCheck": true, // Skip type checking of declaration files
+                "forceConsistentCasingInFileNames": true // Ensure consistent casing in file names
+            },
+            "include": ["."], // Include all files in the src directory
+            "exclude": ["node_modules"] // Exclude node_modules
+        }
+    - migrating to ts:
+        -> npm install @types/express

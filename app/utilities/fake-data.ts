@@ -1,4 +1,6 @@
-const books=[
+import Book from "./models/book.model";
+
+const books:Book[]=[
     {
       "id": 1,
       "title": "The Lost Kingdom",
@@ -101,4 +103,4 @@ const books=[
     }
   ]
 
-  module.exports = books;
+  export default books;
