@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 import books from '../utilities/fake-data';
 import Book from '../utilities/models/book.model';
-const getAllBooks = (req:Request, res:Response) => {
+const getAllBooks:RequestHandler = (req:Request, res:Response):void => {
     console.log("getAllBooks")
     try {
         res.status(200).json({
@@ -17,7 +17,7 @@ const getAllBooks = (req:Request, res:Response) => {
         })
     }
 }
-const findBook = (req: Request, res: Response) => {
+const findBook:RequestHandler  = (req: Request, res: Response):void => {
     const id = parseInt(req.params.id);
     const book = books.find((b) => b.id === id);
     if (book) {
@@ -27,7 +27,7 @@ const findBook = (req: Request, res: Response) => {
     }
 };
 
-const insertBook = (req: Request, res: Response) => {
+const insertBook:RequestHandler  = (req: Request, res: Response):void => {
     const newBook: Book = {
         id: books.length + 1, // Generate a new ID
         ...req.body,
@@ -37,7 +37,7 @@ const insertBook = (req: Request, res: Response) => {
 };
 
 // Update a book by ID
-const updateBook = (req: Request, res: Response) => {
+const updateBook:RequestHandler  = (req: Request, res: Response):void => {
     const id = parseInt(req.params.id);
     const bookIndex = books.findIndex((b) => b.id === id);
     if (bookIndex !== -1) {
@@ -49,7 +49,7 @@ const updateBook = (req: Request, res: Response) => {
 };
 
 // Delete a book by ID
-const deleteBook = (req: Request, res: Response) => {
+const deleteBook:RequestHandler  = (req: Request, res: Response):void => {
     const id = parseInt(req.params.id);
     const bookIndex = books.findIndex((b) => b.id === id);
     if (bookIndex !== -1) {

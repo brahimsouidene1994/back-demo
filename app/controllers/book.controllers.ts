@@ -1,9 +1,9 @@
-const book = require('../db/models/book');
-
-const getAllBooks = async (req, res) => {
+import Book from '../db/models/Book';
+import { Request, RequestHandler, Response } from 'express';
+const getAllBooks:RequestHandler = async (req:Request, res:Response):Promise<void> => {
     console.log("getAllBooks")
     try {
-        const allBooks = await book.findAll()
+        const allBooks = await Book.findAll()
         res.status(200).json({
             success: true,
             data: allBooks
@@ -18,19 +18,19 @@ const getAllBooks = async (req, res) => {
     }
 }
 
-const findBook = async (req, res) => {
+const findBook:RequestHandler = async (req:Request, res:Response):Promise<void> => {
     console.log("findBook", req.params)
     const { id } = req.params
     if (!id)
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             message: "Id Book Not Provided"
         })
     try {
-        const bookFound = await book.findOne({ where: { id } });
+        const bookFound = await Book.findOne({ where: { id } });
 
         if (!bookFound)
-            return res.status(500).json({
+            res.status(500).json({
                 success: false,
                 message: "Book Not Found!"
             })
@@ -48,22 +48,22 @@ const findBook = async (req, res) => {
     }
 }
 
-const updateBook = async (req, res) => {
+const updateBook:RequestHandler = async (req:Request, res:Response):Promise<void> => {
     console.log("updateBook", req.params, req.body)
     const { id } = req.params
     const obj = req.body
     if (!id)
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             message: "Id Book Not Provided"
         })
     if (!obj)
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             message: "Data To Update Not Provided"
         })
     try {
-        const [updatedBook] = await book.update(
+        const [updatedBook] = await Book.update(
             obj,
             {
                 where: { id }
@@ -71,12 +71,12 @@ const updateBook = async (req, res) => {
 
         );
         if (!updatedBook)
-            return res.status(500).json({
+            res.status(500).json({
                 success: false,
                 message: "Book Not Found"
             })
         res.status(200).json({
-            success: false,
+            success: true,
             message: "Book Updated successfully"
         });
     } catch (err) {
@@ -88,24 +88,24 @@ const updateBook = async (req, res) => {
     }
 }
 
-const deleteBook = async (req, res) => {
+const deleteBook:RequestHandler = async (req:Request, res:Response):Promise<void> => {
     console.log("deleteBook", req.params)
     const { id } = req.params
     if (!id)
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             message: "Id Book Not Provided"
         })
     try {
-        const bookDeleted =  await book.destroy({
+        const bookDeleted =  await Book.destroy({
             where: {
                 id
             },
-            force: true
+            // force: true
         });
 
         if (!bookDeleted)
-            return res.status(500).json({
+            res.status(500).json({
                 success: false,
                 message: "Book Not Found"
             })
@@ -124,16 +124,16 @@ const deleteBook = async (req, res) => {
 
 }
 
-const insertBook = async (req, res) => {
+const insertBook:RequestHandler = async (req:Request, res:Response):Promise<void> => {
     console.log("insertBook", req.body)
     const obj = req.body
     if (!obj)
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             message: "Data To Insert Not Provided"
         })
     try {
-        const instertedBook = await book.create(obj);
+        const instertedBook = await Book.create(obj);
         res.status(200).json({
             success: true,
             message: "Book inserted successfully",
@@ -147,7 +147,7 @@ const insertBook = async (req, res) => {
     }
 }
 
-module.exports = {
+export default {
     getAllBooks,
     findBook,
     updateBook,

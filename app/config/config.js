@@ -8,4 +8,4 @@ const development = {
     logging: false
 }
 
-module.exports = development;
+module.exports = development

@@ -1,32 +1,33 @@
-const user = require('../db/models/user');
-const bcrypt= require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import User from '../db/models/User';
+import { hashSync, compareSync } from 'bcryptjs';
+import {sign} from 'jsonwebtoken'
+import { Request, RequestHandler, Response } from 'express';
 
-const signup = async (req, res) => {
+const signup:RequestHandler = async (req:Request, res:Response):Promise<void> => {
     console.log("signup()")
     const { username, password } = req.body;
     if(!username || !password) {
-        return res.status(400).send({
+        res.status(400).send({
             success: false,
             message: "Username and Password are required"
         });
     }
     try {
-        const foundUser = await user.findOne({
+        const foundUser = await User.findOne({
             where: { username },
         })
         if (foundUser) {
-            return res.status(409).send({
+            res.status(409).send({
                 success: false,
                 message: "Username already exists"
             });
         }
-        const newUSer = await user.create({
+        const newUSer = await User.create({
             username: username,
-            password: bcrypt.hashSync(password, 8)
+            password: hashSync(password, 8)
         });
 
-        const token = jwt.sign({id:newUSer.id},'demo-secret',{expiresIn:3600})
+        const token = sign({id:newUSer.id},'demo-secret',{expiresIn:3600})
         
         res.status(200).send({
             success: true,
@@ -35,44 +36,45 @@ const signup = async (req, res) => {
         });
         
     }
-    catch (error) {
-        console.error("Error ", error)
+    catch (err) {
+        console.error("Error ", err)
         res.status(401).send({
-            message: error.message
+            success: false,
+            message: "Registration failed: ",err
         });
     }
 };
 
-const signin = async (req, res) => {
+const signin :RequestHandler = async (req:Request, res:Response):Promise<void> => {
     console.log("signin()")
     const { username, password } = req.body;
     if(!username || !password){
-        return res.status(400).send({
+        res.status(400).send({
             success: false,
             message: "Username and Password are required"
         });
     }
     try{
-        const foundUser = await user.findOne({
+        const foundUser = await User.findOne({
             where: { username }
         })
     
         if (!foundUser) {
-            return res.status(401).send({ 
+            res.status(401).send({ 
                 success: false,
                 message: "User Not found." 
             });
         }
-        const isValidPassword = bcrypt.compareSync(password, foundUser.password)
+        const isValidPassword = compareSync(password, foundUser!.password)
 
         if(!isValidPassword){
-            return res.status(401).send({ 
+            res.status(401).send({ 
                 success: false,
                 message: "Password not valid." 
             });
         }
 
-        const token = jwt.sign({id:foundUser.id},'demo-secret',{expiresIn:3600})
+        const token = sign({id:foundUser!.id},'demo-secret',{expiresIn:3600})
 
         res.status(200).send({
             success: true,
@@ -83,12 +85,13 @@ const signin = async (req, res) => {
     catch(err){
         console.error("Error ", err)
         res.status(401).send({
-            message: err.message
+            success: false,
+            message: "Login failed: ",err
         });
     }
 };
 
-module.exports = {
+export default {
     signup,
     signin,
 };
