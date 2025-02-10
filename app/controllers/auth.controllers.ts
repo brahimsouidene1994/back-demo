@@ -11,9 +11,10 @@ const signup:RequestHandler = async (req:Request, res:Response):Promise<void> =>
             success: false,
             message: "Username and Password are required"
         });
+        return;
     }
     try {
-        const foundUser = await User.findOne({
+        const foundUser:User|null = await User.findOne({
             where: { username },
         })
         if (foundUser) {
@@ -21,13 +22,14 @@ const signup:RequestHandler = async (req:Request, res:Response):Promise<void> =>
                 success: false,
                 message: "Username already exists"
             });
+            return;
         }
-        const newUSer = await User.create({
+        const newUSer:User = await User.create({
             username: username,
             password: hashSync(password, 8)
         });
 
-        const token = sign({id:newUSer.id},'demo-secret',{expiresIn:3600})
+        const token:string = sign({id:newUSer.id},'demo-secret',{expiresIn:3600})
         
         res.status(200).send({
             success: true,
@@ -53,6 +55,7 @@ const signin :RequestHandler = async (req:Request, res:Response):Promise<void> =
             success: false,
             message: "Username and Password are required"
         });
+        return;
     }
     try{
         const foundUser = await User.findOne({
@@ -64,17 +67,19 @@ const signin :RequestHandler = async (req:Request, res:Response):Promise<void> =
                 success: false,
                 message: "User Not found." 
             });
+            return;
         }
-        const isValidPassword = compareSync(password, foundUser!.password)
+        const isValidPassword:boolean = compareSync(password, foundUser!.password)
 
         if(!isValidPassword){
             res.status(401).send({ 
                 success: false,
                 message: "Password not valid." 
             });
+            return;
         }
 
-        const token = sign({id:foundUser!.id},'demo-secret',{expiresIn:3600})
+        const token:string = sign({id:foundUser!.id},'demo-secret',{expiresIn:3600})
 
         res.status(200).send({
             success: true,

@@ -161,4 +161,4 @@
         -> npm install @types/express
     - sequelize with ts:
         https://github.com/sequelize/sequelize-typescript
-        -> npm i @types/validator reflect-metadata sequelize-typescript
+        -> npm i @types/validator reflect-metadata sequelize-typescript @types/bcryptjs @types/jsonwebtoken

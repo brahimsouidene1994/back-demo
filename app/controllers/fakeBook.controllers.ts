@@ -19,7 +19,7 @@ const getAllBooks:RequestHandler = (req:Request, res:Response):void => {
 }
 const findBook:RequestHandler  = (req: Request, res: Response):void => {
     const id = parseInt(req.params.id);
-    const book = books.find((b) => b.id === id);
+    const book:Book | undefined = books.find((b) => b.id === id);
     if (book) {
         res.json(book);
     } else {
@@ -28,9 +28,10 @@ const findBook:RequestHandler  = (req: Request, res: Response):void => {
 };
 
 const insertBook:RequestHandler  = (req: Request, res: Response):void => {
+    const bookObj= req.body;
     const newBook: Book = {
         id: books.length + 1, // Generate a new ID
-        ...req.body,
+        ...bookObj,
     };
     books.push(newBook);
     res.status(201).json(newBook);
@@ -38,8 +39,8 @@ const insertBook:RequestHandler  = (req: Request, res: Response):void => {
 
 // Update a book by ID
 const updateBook:RequestHandler  = (req: Request, res: Response):void => {
-    const id = parseInt(req.params.id);
-    const bookIndex = books.findIndex((b) => b.id === id);
+    const id:number = parseInt(req.params.id);
+    const bookIndex:number = books.findIndex((b) => b.id === id);
     if (bookIndex !== -1) {
         books[bookIndex] = { ...books[bookIndex], ...req.body };
         res.json(books[bookIndex]);
@@ -50,8 +51,8 @@ const updateBook:RequestHandler  = (req: Request, res: Response):void => {
 
 // Delete a book by ID
 const deleteBook:RequestHandler  = (req: Request, res: Response):void => {
-    const id = parseInt(req.params.id);
-    const bookIndex = books.findIndex((b) => b.id === id);
+    const id:number = parseInt(req.params.id);
+    const bookIndex:number = books.findIndex((b) => b.id === id);
     if (bookIndex !== -1) {
         books.splice(bookIndex, 1);
         res.status(200).json(books);
