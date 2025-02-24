@@ -128,3 +128,15 @@
         -> git checkout -b DemoBranch
 12- jwt:
     - jsonwebtoken, bcryptjs 
+
+13- Build node app image 
+    https://docs.docker.com/guides/nodejs/containerize/
+
+    build image:
+        -> sudo docker build -t <image-name>:<tag> .
+    
+    logs container:
+        -> sudo docker logs -f <container-name>
+    
+    open container shell:
+        -> sudo docker exec -it <container-name> sh

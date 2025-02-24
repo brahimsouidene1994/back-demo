@@ -13,6 +13,19 @@ services: # Defines the services (containers) that will run
     networks:
       - postgres-network
 
+  backend: # This is the name of the service.
+    image: demo-back:latest # Specifies the Docker image to use
+    container_name: backend-container # Specifies the name of the container
+    environment: 
+      DB_HOST: postgres
+      DB_USERNAME: mydb_user
+      DB_PASSWORD: 123456
+      DB_DATABASE: mydb
+    ports:
+      - "3000:3000"
+    networks:
+      - postgres-network
+
 volumes: # Defines the volumes that will be created
   postgres-data:
 
