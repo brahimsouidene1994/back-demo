@@ -1,6 +1,6 @@
-const user = require('../db/models/user');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import user from '../db/models/user.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 const signup = async (req, res) => {
     console.log("signup()")
@@ -96,7 +96,7 @@ const verifySession = async (req, res) => {
     });
 }
 
-module.exports = {
+export default {
     signup,
     signin,
     verifySession

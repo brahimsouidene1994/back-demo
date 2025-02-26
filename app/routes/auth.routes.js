@@ -1,19 +1,15 @@
-const {
-    signup,
-    signin,
-    verifySession
-} = require('../controllers/auth.controllers');
-const verifyToken = require('../middlewares/jwtVerify');
-
-const router = require('express').Router();
-
+import authController from '../controllers/auth.controllers.js';
+import verifyToken from '../middlewares/jwtVerify.js';
+import { Router } from 'express';
+const router = Router();
 router
     .route('/api/auth/signup')
-    .post(signup);
+    .post(authController.signup);
 router
     .route('/api/auth/signin')
-    .post(signin);
+    .post(authController.signin);
 router
     .route('/api/auth/verifySession')
-    .get(verifyToken, verifySession);
-module.exports = router;
+    .get(verifyToken, authController.verifySession);
+
+export default router;

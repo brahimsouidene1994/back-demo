@@ -1,4 +1,4 @@
-const book = require('../db/models/book');
+import book from '../db/models/book.js';
 
 const getAllBooks = async (req, res) => {
     console.log("getAllBooks")
@@ -147,7 +147,7 @@ const insertBook = async (req, res) => {
     }
 }
 
-module.exports = {
+export default {
     getAllBooks,
     findBook,
     updateBook,

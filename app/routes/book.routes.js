@@ -1,19 +1,21 @@
-const { getAllBooks, findBook, updateBook, deleteBook, insertBook } = require('../controllers/book.controllers')
-const router = require('express').Router();
-const verifyToken = require('../middlewares/jwtVerify');
+import bookController from '../controllers/book.controllers.js'
+import { Router } from 'express';
+import verifyToken from '../middlewares/jwtVerify.js';
+const router = Router();
 router
     .route('/api/book/getAllBooks')
-    .get(verifyToken, getAllBooks)
+    .get(verifyToken, bookController.getAllBooks)
 router
     .route('/api/book/findBook/:id')
-    .get(verifyToken, findBook)
+    .get(verifyToken, bookController.findBook)
 router
     .route('/api/book/updateBook/:id')
-    .patch(verifyToken, updateBook)
+    .patch(verifyToken, bookController.updateBook)
 router
     .route('/api/book/deleteBook/:id')
-    .delete(verifyToken, deleteBook)
+    .delete(verifyToken, bookController.deleteBook)
 router
     .route('/api/book/insertBook')
-    .post(verifyToken, insertBook)
-module.exports = router;
+    .post(verifyToken, bookController.insertBook)
+
+export default router;

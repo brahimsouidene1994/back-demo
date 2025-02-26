@@ -1,9 +1,9 @@
 'use strict';
 
-const { DataTypes } = require('sequelize');
-const {sequelize} = require('../../config/database');
+import { DataTypes } from 'sequelize';
+import db from '../../config/database.js';
 
-const book = sequelize.define(
+const book = db.sequelize.define(
     'book',
     {
         id: {
@@ -34,4 +34,4 @@ const book = sequelize.define(
     }
 );
 
-module.exports = book;
+export default book;

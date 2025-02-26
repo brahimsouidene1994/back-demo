@@ -1,5 +1,5 @@
-const { Sequelize } = require('sequelize');
-const development = require('./config');
+import { Sequelize } from 'sequelize' ;
+import development from './config.js';
 const sequelize = new Sequelize(development);
 
 const checkCon=async()=>{
@@ -12,4 +12,4 @@ const checkCon=async()=>{
         console.error('Unable to connect to the database:', error);
       }
 }
-module.exports = {checkCon, sequelize};
+export default {checkCon, sequelize};

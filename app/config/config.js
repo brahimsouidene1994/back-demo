@@ -1,4 +1,6 @@
-require('dotenv').config({path: '.env'})
+import env from 'dotenv';
+
+env.config({path: '.env'});
 const development = {
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
@@ -8,4 +10,4 @@ const development = {
     logging: false
 }
 
-module.exports = development;
+export default development;
