@@ -14,6 +14,8 @@ const book = db.sequelize.define(
         title: DataTypes.STRING,
         author: DataTypes.STRING,
         genre: DataTypes.STRING,
+        cover: DataTypes.STRING,
+        description: DataTypes.STRING,
         price: DataTypes.DOUBLE,
         createdAt: {
             type: DataTypes.DATE,
